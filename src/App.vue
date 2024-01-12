@@ -3,6 +3,7 @@
 import axios from 'axios';
 //importo i figli
 import AppHeader from './components/AppHeader.vue';
+import AppMain from './components/AppMain.vue';
 //importo lo store
 import { store } from './store';
 
@@ -10,12 +11,43 @@ import { store } from './store';
 export default {
   components: {
     AppHeader,
-    
+    AppMain,
   },
   data() {
     return {
       store,
     }
+  },
+
+  methods: {
+    // funzione per che mi inserisce nell' array i film
+    getFilms() {
+
+      //creo una flag per la searchbar
+      let myURL = store.filmURL
+
+      //se utente ha fatto una ricerca
+      if(store.searchText !== ""){
+        myURL += `&title=${store.searchText}`;
+        console.log(myURL);
+      }
+
+
+      axios
+        .get(myURL)
+        .then((res => {
+          store.filmList = res.data.results;
+          console.log(res.data.results);
+        }))
+        .catch((err) => {
+          console.log("Errori", err);
+        });
+    }
+  },
+
+  created() {
+    this.getFilms();
+
   },
 }
 </script>
@@ -23,9 +55,13 @@ export default {
 <template>
 
   <header>
-    <AppHeader />
+    <AppHeader  @click.prevent="getFilms"/>
   </header>
 
+  <main>
+    <AppMain />
+  </main>
+  
 </template>
 
 <style lang="scss">
