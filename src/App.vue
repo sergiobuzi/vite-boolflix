@@ -28,8 +28,7 @@ export default {
 
       //se utente ha fatto una ricerca
       if(store.searchText !== ""){
-        myURL += `&title=${store.searchText}`;
-        console.log(myURL);
+        myURL += `&query=${store.searchText}`;
       }
 
 
@@ -37,7 +36,6 @@ export default {
         .get(myURL)
         .then((res => {
           store.filmList = res.data.results;
-          console.log(res.data.results);
         }))
         .catch((err) => {
           console.log("Errori", err);
