@@ -6,4 +6,5 @@ export const store = reactive({
     filmURL: "https://api.themoviedb.org/3/search/movie?api_key=a18d43f8548d9db5237e978d594c8ab8&query=movie",
     //creo una variabile per la searchbar
     searchText: "",
+    //link per le bandiere
 });

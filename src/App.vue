@@ -31,7 +31,6 @@ export default {
         myURL += `&query=${store.searchText}`;
       }
 
-
       axios
         .get(myURL)
         .then((res => {
