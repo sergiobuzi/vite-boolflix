@@ -31,7 +31,7 @@ export default {
                 <h4 class="card_item">Titolo: {{ item.title }}</h4>
                 <h4 class="card_item">Titolo Originale: {{ item.original_title }}</h4>
                 <div class="card_item">Voto: {{ item.vote_average }}</div>
-                <p class="card_item">Lingua: {{ item.original_language }}</p>
+                <div class="card_item">Lingua: {{ item.original_language }} <img src="../assets/italian-flag" alt="" class="flag"></div>
             </div>
         </div>
     </div>
@@ -64,6 +64,12 @@ export default {
 
         .card-item {
             word-wrap: break-word;
+
+            .flag{
+                background-image: url(/public/italian-flag.png) ;
+                height: 10px;
+                width: 20px;
+            }
         }
     }
 }
