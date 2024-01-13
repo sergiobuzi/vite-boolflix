@@ -1,7 +1,5 @@
 <script>
 import { store } from '../store';
-import AppTvSeries from './AppTvSeries.vue';
-import axios from 'axios';
 
 export default {
     name: 'AppMain',
@@ -22,45 +20,20 @@ export default {
         //funzione per prendere aggiungere la parte di link mancante dei poster
         getPosters(poster) {
             return `https://image.tmdb.org/t/p/w342${poster}`;
-        },
-
-        // funzione per che mi inserisce nell' array le serie tv
-        getSerieTv() {
-
-            //creo una flag per la searchbar
-            let myTvURL = store.serieTvURL
-
-            //se utente ha fatto una ricerca
-            if (store.searchText !== "") {
-                myTvURL += `&query=${store.searchText}`;
-            }
-
-            axios
-                .get(myTvURL)
-                .then((res => {
-                    store.serieTvList = res.data.results;
-                    console.log(store.serieTvList);
-                }))
-                .catch((err) => {
-                    console.log("Errori", err);
-                });
-        },
-        
+        }
     },
     created() {
         this.getPosters();
-        this.getSerieTv();
     },
-    components: { 
-        AppTvSeries,
-
-    }
+    components: {}
 }
 </script>
 
 <template>
 
     <div id="container">
+
+        <!-- Film -->
         <h2>Film</h2>
 
         <div id="row">
@@ -81,7 +54,28 @@ export default {
 
         </div>
 
-        <AppTvSeries @click.prevent="getSerieTv"/>
+
+
+        <!-- SERIE TV -->
+        <h2>Serie Tv</h2>
+
+        <div id="row">
+
+            <div class="card" v-for="(item, i) in store.serieTvList" :key="i">
+
+                <img :src="getPosters(item.poster_path)" alt="" class="card-thumb">
+                <h4 class="card_item">Titolo: {{ item.name }}</h4>
+                <h4 class="card_item">Titolo Originale: {{ item.original_name }}</h4>
+                <div class="card_item">Voto: {{ item.vote_average }}</div>
+                <div class="card-item len-box">
+                    <div>Lingua: </div>
+                    <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
+                    <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

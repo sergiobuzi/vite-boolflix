@@ -21,20 +21,31 @@ export default {
 
   methods: {
     // funzione per che mi inserisce nell' array i film
-    getFilms() {
+    getItems() {
 
       //creo una flag per la searchbar
-      let myURL = store.filmURL
+      let myURLFilm = store.filmURL
+      let myURLTVSeries = store.serieTvURL
 
       //se utente ha fatto una ricerca
       if(store.searchText !== ""){
-        myURL += `&query=${store.searchText}`;
+        myURLFilm += `&query=${store.searchText}`;
+        myURLTVSeries += `&query=${store.searchText}`
       }
 
       axios
-        .get(myURL)
+        .get(myURLFilm)
         .then((res => {
           store.filmList = res.data.results;
+        }))
+        .catch((err) => {
+          console.log("Errori", err);
+        });
+
+        axios
+        .get(myURLTVSeries)
+        .then((res => {
+          store.serieTvList = res.data.results;
         }))
         .catch((err) => {
           console.log("Errori", err);
@@ -43,7 +54,7 @@ export default {
   },
 
   created() {
-    this.getFilms();
+    this.getItems();
 
   },
 }
@@ -52,7 +63,7 @@ export default {
 <template>
 
   <header>
-    <AppHeader  @click.prevent="getFilms"/>
+    <AppHeader  @click.prevent="getItems"/>
   </header>
 
   <main>
