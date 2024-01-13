@@ -20,10 +20,16 @@ export default {
         //funzione per prendere aggiungere la parte di link mancante dei poster
         getPosters(poster) {
             return `https://image.tmdb.org/t/p/w342${poster}`;
+        },
+
+        //funzione che mi ritonra i numeri inseriti arrotondati per eccesso
+        voteStars(numero){
+            return Math.ceil(numero);
         }
     },
     created() {
         this.getPosters();
+        this.voteStars();
     },
     components: {}
 }
@@ -43,9 +49,11 @@ export default {
                 <img :src="getPosters(item.poster_path)" alt="" class="card-thumb">
                 <h4 class="card_item">Titolo: {{ item.title }}</h4>
                 <h4 class="card_item">Titolo Originale: {{ item.original_title }}</h4>
-                <div class="card_item">Voto: {{ item.vote_average }}</div>
+                <div class="card_item">
+                    <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
+                    <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+                </div>
                 <div class="card-item len-box">
-                    <div>Lingua: </div>
                     <img class="flag"  v-if="flags[item.original_language]" :src="flags[item.original_language]" >
                     <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
                 </div>
@@ -57,7 +65,7 @@ export default {
 
 
         <!-- SERIE TV -->
-        <h2>Serie Tv</h2>
+        <h2 style="margin-top: 50px;">Serie Tv</h2>
 
         <div id="row">
 
@@ -66,9 +74,11 @@ export default {
                 <img :src="getPosters(item.poster_path)" alt="" class="card-thumb">
                 <h4 class="card_item">Titolo: {{ item.name }}</h4>
                 <h4 class="card_item">Titolo Originale: {{ item.original_name }}</h4>
-                <div class="card_item">Voto: {{ item.vote_average }}</div>
+                <div class="card_item">
+                    <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
+                    <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+                </div>
                 <div class="card-item len-box">
-                    <div>Lingua: </div>
                     <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
                     <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
                 </div>
@@ -110,6 +120,7 @@ export default {
         .card-item {
             word-wrap: break-word;
             display: flex;
+            margin-bottom: 20px;
         }
 
         .len-box{

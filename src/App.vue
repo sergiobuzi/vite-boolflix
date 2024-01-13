@@ -33,6 +33,7 @@ export default {
         myURLTVSeries += `&query=${store.searchText}`
       }
 
+      //chiamata axios per i film
       axios
         .get(myURLFilm)
         .then((res => {
@@ -42,6 +43,7 @@ export default {
           console.log("Errori", err);
         });
 
+        //chiamata axios per le serie tv
         axios
         .get(myURLTVSeries)
         .then((res => {
