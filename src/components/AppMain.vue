@@ -182,6 +182,33 @@ export default {
         }
 
     }
+
+/************************************************
+    SOLUZIONE RESPONSIVE
+************************************************/
+
+ /*tablet view*/
+    @media all and (max-width: 1350px){
+
+        .card {
+            width: calc(100% / 4);
+        }
+    };
+
+    /*Mobile view*/
+    @media all and (max-width: 950px){
+
+        .card {
+            width: calc(100% / 3);
+        }
+    };
+    /*little mobile view*/ 
+    @media all and (max-width: 650px){
+
+        .card {
+            width: calc(100% / 2);
+        }
+    };
 }
 
 
@@ -219,15 +246,4 @@ export default {
     transform: rotateY(180deg);
 }
 
-/************************************************
-    SOLUZIONE RESPONSIVE
- ************************************************/
-
- /*tablet view*/
- @media all and (max-width: 1350px){
-
-    .card {
-        width: calc(100% / 4);
-    }
-} 
 </style>
