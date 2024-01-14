@@ -23,7 +23,7 @@ export default {
         },
 
         //funzione che mi ritonra i numeri inseriti arrotondati per eccesso
-        voteStars(numero){
+        voteStars(numero) {
             return Math.ceil(numero);
         }
     },
@@ -36,7 +36,6 @@ export default {
 </script>
 
 <template>
-
     <div id="container">
 
         <!-- Film -->
@@ -44,20 +43,24 @@ export default {
 
         <div id="row">
 
-            <div class="card" v-for="(item, i) in store.filmList" :key="i">
-
-                <img :src="getPosters(item.poster_path)" alt="" class="card-thumb">
-                <h4 class="card_item">Titolo: {{ item.title }}</h4>
-                <h4 class="card_item">Titolo Originale: {{ item.original_title }}</h4>
-                <div class="card_item">
-                    <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
-                    <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+            <div class="flip-card card" v-for="(item, i) in store.filmList" :key="i">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img :src="getPosters(item.poster_path)" alt="Avatar" class="card-thumb">
+                    </div>
+                    <ul class="flip-card-back card-item" >
+                        <li class="card_item"><span class="card-title">Titolo:</span> {{ item.title }}</li>
+                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_title }}</li>
+                        <li class="card_item">
+                            <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
+                            <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+                        </li>
+                        <li class="card-item">
+                            <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
+                            <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-item len-box">
-                    <img class="flag"  v-if="flags[item.original_language]" :src="flags[item.original_language]" >
-                    <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
-                </div>
-
             </div>
 
         </div>
@@ -65,24 +68,28 @@ export default {
 
 
         <!-- SERIE TV -->
-        <h2 style="margin-top: 50px;">Serie Tv</h2>
+        <h2 style="margin-top: 20px;">Serie Tv</h2>
 
         <div id="row">
 
-            <div class="card" v-for="(item, i) in store.serieTvList" :key="i">
-
-                <img :src="getPosters(item.poster_path)" alt="" class="card-thumb">
-                <h4 class="card_item">Titolo: {{ item.name }}</h4>
-                <h4 class="card_item">Titolo Originale: {{ item.original_name }}</h4>
-                <div class="card_item">
-                    <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
-                    <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+            <div class="flip-card card" v-for="(item, i) in store.serieTvList" :key="i">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img :src="getPosters(item.poster_path)" alt="Avatar" class="card-thumb">
+                    </div>
+                    <ul class="flip-card-back card-item" >
+                        <li class="card_item"><span class="card-title">Titolo:</span> {{ item.name }}</li>
+                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_name }}</li>
+                        <li class="card_item">
+                            <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
+                            <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
+                        </li>
+                        <li class="card-item">
+                            <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
+                            <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-item len-box">
-                    <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
-                    <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
-                </div>
-
             </div>
 
         </div>
@@ -97,7 +104,7 @@ export default {
 #container {
     width: 95%;
     margin: auto;
-    height: 100vh;
+    height: calc(100vh - 90px);
 
     #row {
         width: 100%;
@@ -120,22 +127,60 @@ export default {
         .card-item {
             word-wrap: break-word;
             display: flex;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+
+            .card-title{
+                font-weight: 600;
+            }
         }
 
-        .len-box{
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
+        .flag {
+            background-size: cover;
+            background-position: center;
+            height: 20px;
+            width: 30px;
+        }
 
-            // settings delle bandiere
-            .flag {
-                background-size: cover;
-                background-position: center;
-                height: 20px;
-                width: 30px;
-            }
-        } 
     }
 }
+
+
+// stili delle flip-cards
+
+
+.flip-card {
+    background-color: transparent;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    background-color: black;
+    color: white;
+    transform: rotateY(180deg);
+}
+
 </style>
