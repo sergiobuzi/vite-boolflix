@@ -48,9 +48,10 @@ export default {
                     <div class="flip-card-front">
                         <img :src="getPosters(item.poster_path)" alt="Avatar" class="card-thumb">
                     </div>
-                    <ul class="flip-card-back card-item" >
+                    <ul class="flip-card-back card-item">
                         <li class="card_item"><span class="card-title">Titolo:</span> {{ item.title }}</li>
-                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_title }}</li>
+                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_title }}
+                        </li>
                         <li class="card_item">
                             <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
                             <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
@@ -77,9 +78,10 @@ export default {
                     <div class="flip-card-front">
                         <img :src="getPosters(item.poster_path)" alt="Avatar" class="card-thumb">
                     </div>
-                    <ul class="flip-card-back card-item" >
+                    <ul class="flip-card-back card-item">
                         <li class="card_item"><span class="card-title">Titolo:</span> {{ item.name }}</li>
-                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_name }}</li>
+                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_name }}
+                        </li>
                         <li class="card_item">
                             <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
                             <i v-for="index in (5 - voteStars(item.vote_average / 2))" :key="index" class="far fa-star"></i>
@@ -95,7 +97,6 @@ export default {
         </div>
 
     </div>
-
 </template>
 
 
@@ -104,24 +105,59 @@ export default {
 #container {
     width: 95%;
     margin: auto;
-    height: calc(100vh - 90px);
+    height: 100vh ;
 
     #row {
         width: 100%;
         min-height: 400px;
         display: flex;
         flex-wrap: wrap;
+
+        // stili delle flip-cards
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            // position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            background-color: black;
+        }
+
+        .flip-card-back {
+            background-color: black;
+            color: white;
+            transform: rotateY(180deg);
+        }
     }
 
     .card {
         width: calc(100% / 6);
-        height: 100%;
+        height: 400px;
         margin-bottom: 20px;
         word-wrap: break-word;
 
         .card-thumb {
             width: 100%;
-            height: 350px;
+            height: 400px;
         }
 
         .card-item {
@@ -131,7 +167,7 @@ export default {
             gap: 10px;
             list-style: none;
 
-            .card-title{
+            .card-title {
                 font-weight: 600;
             }
         }
@@ -148,8 +184,6 @@ export default {
 
 
 // stili delle flip-cards
-
-
 .flip-card {
     background-color: transparent;
     perspective: 1000px;
@@ -182,5 +216,4 @@ export default {
     color: white;
     transform: rotateY(180deg);
 }
-
 </style>
