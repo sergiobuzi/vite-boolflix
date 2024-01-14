@@ -60,6 +60,7 @@ export default {
                             <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
                             <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
                         </li>
+                        <li class="card-item" style="font-size:12px;"><span class="card-title">Descrizione:</span>{{ item.overview }}</li>
                     </ul>
                 </div>
             </div>
@@ -80,7 +81,7 @@ export default {
                     </div>
                     <ul class="flip-card-back card-item">
                         <li class="card_item"><span class="card-title">Titolo:</span> {{ item.name }}</li>
-                        <li class="card_item"><span class="card-title">Titolo Originale:</span> {{ item.original_name }}
+                        <li class="card_item"><span class="card-title">Titolo: Originale:</span> {{ item.original_name }}
                         </li>
                         <li class="card_item">
                             <i v-for="index in voteStars(item.vote_average / 2)" :key="index" class="fas fa-star"></i>
@@ -90,6 +91,7 @@ export default {
                             <img class="flag" v-if="flags[item.original_language]" :src="flags[item.original_language]">
                             <img class="flag" v-else="flags[item.original_language]" :src="flags.else">
                         </li>
+                        <li class="card-item" style="font-size:15px;"><span class="card-title">Descrizione:</span>{{ item.overview }}</li>
                     </ul>
                 </div>
             </div>
@@ -216,4 +218,16 @@ export default {
     color: white;
     transform: rotateY(180deg);
 }
+
+/************************************************
+    SOLUZIONE RESPONSIVE
+ ************************************************/
+
+ /*tablet view*/
+ @media all and (max-width: 1350px){
+
+    .card {
+        width: calc(100% / 4);
+    }
+} 
 </style>
